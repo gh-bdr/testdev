@@ -14,7 +14,7 @@ pipeline {
             }
             steps {
                 echo 'Compiling nodejs app'
-                sh 'npm install'
+               
             }
         }
 
@@ -27,8 +27,7 @@ pipeline {
             }
             steps {
                 echo 'Testing'
-                sh 'npm install'
-                sh 'npm test'
+                
             }
         }
 
