@@ -3,8 +3,6 @@ pipeline {
 
     environment {
         CI = 'true'
-        registry = "registry.digitalocean.com/pixi"
-        registryCredential = 'DO-registry'
     }
     stages {
 
@@ -15,9 +13,7 @@ pipeline {
                 echo 'building'
                 script {
                     docker.withRegistry('https://registry.digitalocean.com/pixi', 'test') {
-
-                        def customImage = docker.build("pixi/my-image:${env.BUILD_ID}")
-
+                        def customImage = docker.build("pixi/start:${env.BRANCH_NAME}-${env.BUILD_ID}")
                         customImage.push()
                     }
                    
