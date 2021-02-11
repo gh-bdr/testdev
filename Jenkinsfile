@@ -14,7 +14,7 @@ pipeline {
             steps{
                 echo 'building'
                 script {
-                    docker.withRegistry('registry.digitalocean.com/pixi', 'test') {
+                    withDockerRegistry('registry.digitalocean.com/pixi', 'test') {
                         echo 'buildinginside'
                         def workerImage = docker.build("startadmin-${env.BRANCH_NAME}:v${env.BUILD_ID}")
                         workerImage.push()
