@@ -38,6 +38,7 @@ pipeline {
                 anyOf { branch 'master'; branch 'staging'; branch 'dev' }
             }
             steps{
+                echo 'building'
                 script {
                     docker.withRegistry("registry.digitalocean.com/pixi" , 'DO-registry') {
                         def workerImage = docker.build("startadmin-${env.BRANCH_NAME}:v${env.BUILD_ID}")
