@@ -38,8 +38,12 @@ pipeline {
                 anyOf { branch 'master'; branch 'staging'; branch 'dev' }
             }
             steps{
-              echo 'Build and Push the docker image'
-
+                script {
+                    docker.withRegistry("registry.digitalocean.com/pixi" , 'DO-registry') {
+                        def workerImage = docker.build("startadmin-${env.BRANCH_NAME}:v${env.BUILD_ID}")
+                        workerImage.push()
+                    }
+                }
             }
         }
 
