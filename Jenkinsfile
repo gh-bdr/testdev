@@ -23,6 +23,7 @@ pipeline {
         
         
                 stage ('Deploy_K8S') {
+                    agent any
              steps {
                      withCredentials([string(credentialsId: "argotest", variable: 'start')]) {
                         sh '''
