@@ -7,41 +7,14 @@ pipeline {
         registryCredential = 'DO-registry'
     }
     stages {
-        stage('Build') {
-            agent {
-                docker{
-                    image 'node:14.15.4-alpine3.11'
-                    args '-v $HOME/.m2:/root/.m2'
-                }
-            }
-            steps {
-                echo 'Compiling nodejs app'
-               
-            }
-        }
 
-        stage('Test') {
-            agent {
-                docker{
-                    image 'node:14.15.4-alpine3.11'
-                    args '-v $HOME/.m2:/root/.m2'
-                }
-            }
-            steps {
-                echo 'Testing'
-                
-            }
-        }
 
         stage('docker-package'){
             agent any
-            when {
-                anyOf { branch 'master'; branch 'staging'; branch 'dev' }
-            }
             steps{
                 echo 'building'
                 script {
-                    docker.withRegistry('registry.digitalocean.com/pixi', 'DO-registry') {
+                    docker.withRegistry('registry.digitalocean.com/pixi', 'test') {
                         echo 'buildinginside'
                         def workerImage = docker.build("startadmin-${env.BRANCH_NAME}:v${env.BUILD_ID}")
                         workerImage.push()
