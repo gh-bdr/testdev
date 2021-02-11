@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         CI = 'true'
+        registry = "registry.digitalocean.com/pixi"
+        registryCredential = 'DO-registry'
     }
     stages {
         stage('Build') {
@@ -39,7 +41,8 @@ pipeline {
             steps{
                 echo 'building'
                 script {
-                    docker.withRegistry("registry.digitalocean.com/pixi" , 'DO-registry') {
+                    docker.withRegistry('registry.digitalocean.com/pixi', 'DO-registry') {
+                        echo 'buildinginside'
                         def workerImage = docker.build("startadmin-${env.BRANCH_NAME}:v${env.BUILD_ID}")
                         workerImage.push()
                     }
