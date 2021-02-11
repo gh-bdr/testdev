@@ -20,5 +20,20 @@ pipeline {
                 }
             }
         }
+        
+        
+                stage ('Deploy_K8S') {
+             steps {
+                     withCredentials([string(credentialsId: "argotest", variable: 'start')]) {
+                        sh '''
+                        
+                        # Deploy to ArgoCD
+                        ARGOCD_SERVER=138.68.74.105:31802 argocd --grpc-web app sync start --force
+                        '''
+               }
+            }
+        }
+        
+        
     }
 }
