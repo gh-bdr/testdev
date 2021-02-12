@@ -26,9 +26,7 @@ pipeline {
             agent any
             steps {
  
-                withCredentials([string(credentialsId: 'argotest', variable: 'NUSER')]) {
-                    export ARGOCD_SERVER=138.68.74.105:31802
-                    export ARGOCD_AUTH_TOKEN=${NUSER}
+                withCredentials([string(credentialsId: 'argotest', variable: 'ARGOCD_AUTH_TOKEN')]) {
                     curl -sSL -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
                     argocd app sync guestbook
                     argocd app wait guestbook
