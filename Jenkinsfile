@@ -27,9 +27,11 @@ pipeline {
              steps {
                      withCredentials([string(credentialsId: "argotest", variable: 'start')]) {
                         sh '''
-                        
+                        ARGOCD_SERVER="138.68.74.105:31802"
+                        APP_NAME="start"
+                        CONTAINER="k8s-debian-test"
                         # Deploy to ArgoCD
-                        ARGOCD_SERVER=138.68.74.105:31802 argocd --grpc-web app sync start --force
+                        ARGOCD_SERVER=$ARGOCD_SERVER argocd --grpc-web app sync $APP_NAME --force
                         '''
                }
             }
