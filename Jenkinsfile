@@ -22,18 +22,18 @@ pipeline {
         }
         
         
-                stage ('Deploy_K8S') {
-                    agent any
-             steps {
-                     withCredentials([string(credentialsId: "argotest", variable: 'start')]) {
-                        sh '''
-                        ARGOCD_SERVER="138.68.74.105:31802"
-                        APP_NAME="start"
-                        CONTAINER="k8s-debian-test"
-                        # Deploy to ArgoCD
-                        ARGOCD_SERVER=$ARGOCD_SERVER argocd --grpc-web app sync $APP_NAME --force
-                        '''
-               }
+        stage ('Deploy_K8S') {
+            agent any
+            steps {
+ 
+                withCredentials([string(credentialsId: 'argotest', variable: 'NUSER')]) {
+                    export ARGOCD_SERVER=138.68.74.105:31802
+                    export ARGOCD_AUTH_TOKEN=${NUSER}
+                    curl -sSL -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
+                    argocd app sync guestbook
+                    argocd app wait guestbook
+                }
+                    
             }
         }
         
