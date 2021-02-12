@@ -22,18 +22,7 @@ pipeline {
         }
         
         
-        stage ('Deploy_K8S') {
-            agent any
-            steps {
- 
-                withCredentials([string(credentialsId: 'argotest', variable: 'ARGOCD_AUTH_TOKEN')]) {
-                    curl -sSL -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
-                    argocd app sync guestbook
-                    argocd app wait guestbook
-                }
-                    
-            }
-        }
+   
         
         
     }
