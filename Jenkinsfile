@@ -13,10 +13,10 @@ pipeline {
                 echo 'building now'
                 script {
                     git credentialsId: 'argotest', url: 'https://github.com/gh-bdr/writejenkins.git'
-                    cd writejenkins
-                    touch index.css
-                    git add . -m "Update guestbook to v2.0"
-                    git push
+                    sh "cd writejenkins"
+                    sh "touch index.css"
+                    sh "git add . -m 'Update guestbook to v2.0'"
+                    sh "git push"
                 }
             }
         }
