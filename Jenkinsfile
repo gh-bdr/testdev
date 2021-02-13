@@ -10,7 +10,7 @@ pipeline {
         stage('docker-package'){
             agent any
             steps{
-                echo 'building'
+                echo 'building now'
 
             }
         }
