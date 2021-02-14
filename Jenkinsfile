@@ -8,16 +8,18 @@ pipeline {
 
 
         stage('docker-package'){
-            agent any
+            agent {
+                docker{ image 'gharbibdr/argocli' }
+            }
             steps{
-                echo 'building now'
+                echo 'deploy now'
                 script {
-                    sh "mkdir deploy && cd deploy"
-                    git credentialsId: 'gh-bdr test repo', url: 'git@github.com:gh-bdr/writejenkins.git'
-                    sh "ls -lart ./*"
-                    sh "touch index.css"
-                    sh "git add . && git commit -m 'Update guestbook to v2.0'"
-                    sh "git push"
+                    withCredentials([usernameColonPassword(credentialsId: 'argocdpass', variable: 'USERPASS')]) {
+                        sh '''
+                            argocd login 51.77.141.51:30001 --username admin --password USERPASS --insecure
+                         '''   
+                    }
+                    
                 }
             }
         }
