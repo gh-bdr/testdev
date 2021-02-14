@@ -16,7 +16,7 @@ pipeline {
                 script {
                     
                     withCredentials([string(credentialsId: "jenkins-argocd-authToken", variable: 'ARGOCD_AUTH_TOKEN')]) {
-                    sh "/argocd app sync start"
+                    sh "argocd app sync start"
                     }
                     
                     
