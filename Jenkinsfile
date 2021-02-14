@@ -16,7 +16,7 @@ pipeline {
                 script {
                     withCredentials([usernameColonPassword(credentialsId: 'argocdpass', variable: 'USERPASS')]) {
                         sh '''
-                            argocd login 51.77.141.51:30001 --username bdr --password $USERPASS --insecure
+                            argocd login 51.77.141.51:30001 --username admin --password $USERPASS --insecure
                             argocd account list
                          '''   
                     }
