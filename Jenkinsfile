@@ -9,7 +9,7 @@ pipeline {
 
         stage('docker-package'){
             agent {
-                docker{ image 'argoproj/argocd-cli:v0.10.6' }
+                docker{ image 'gharbibdr/argocli' }
             }
             steps{
                 echo 'deploy now'
