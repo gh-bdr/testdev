@@ -9,11 +9,15 @@ pipeline {
 
         stage('docker-package'){
             agent {
-                docker{ image 'gharbibdr/argocli' }
+                docker{ image 'argoproj/argocd-cli' }
             }
             steps{
                 echo 'deploy now'
                 script {
+                    
+                    
+                    
+                    
                     withCredentials([string(credentialsId: 'argopass', variable: 'USERPASS')]) {
                         sh 'argocd login 51.77.141.51:30001 --username admin --password $USERPASS --insecure && argocd account list'
                         sh 'argocd account list'    
