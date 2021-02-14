@@ -15,11 +15,11 @@ pipeline {
                 echo 'deploy now'
                 script {
                     withCredentials([string(credentialsId: 'argopass', variable: 'USERPASS')]) {
-                        sh '''
+                        sh 'argocd login 51.77.141.51:30001 --username admin --password $USERPASS --insecure'
+                        sh 'argocd account list'    
                             
-                            argocd login 51.77.141.51:30001 --username admin --password $USERPASS --insecure
-                            argocd account list
-                         '''
+                            
+                    
                     }
 
                     
